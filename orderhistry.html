@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order History - Style Crafters</title>
+    <link rel="stylesheet" href="style-order-history.css" />
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        header {
+            width: 100%;
+            background-color: #333;
+            padding: 15px 0;
+        }
+
+        nav {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            font-size: 1.1rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff6f61;
+        }
+
+        /* Order History Section */
+        .order-history-section {
+            background-color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .order-history-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Order History Table */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .order-table th,
+        .order-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .order-table th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .order-table td {
+            color: #555;
+        }
+
+        .order-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Button Styling */
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .back-btn,
+        .view-details-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .back-btn {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .view-details-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background-color: #e12f2d;
+        }
+
+        .view-details-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .order-history-section {
+                padding: 30px;
+            }
+
+            .order-history-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .back-btn,
+            .view-details-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Style Crafters</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">Shop</a></li>
+                <li><a href="indexaddcart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Order History Section -->
+    <main>
+        <section class="order-history-section">
+            <h2>Your Order History</h2>
+
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Order Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#12345</td>
+                        <td>2025-04-25</td>
+                        <td>₹799.00</td>
+                        <td>Delivered</td>
+                        <td><a href="order-details.html" class="view-details-btn">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>#12346</td>
+                        <td>2025-04-20</td>
+                        <td>₹1,199.00</td>
+                        <td>Shipped</td>
+                        <td><a href="order-details.html" class="view-details-btn">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>#12347</td>
+                        <td>2025-04-18</td>
+                        <td>₹499.00</td>
+                        <td>Pending</td>
+                        <td><a href="order-details.html" class="view-details-btn">View Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="button-group">
+                <a href="index.html" class="back-btn">← Back to Shopping</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Style Crafters. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

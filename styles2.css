@@ -1,0 +1,209 @@
+/* === Global Styles === */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f9fb;
+    margin: 0;
+    padding: 0;
+    color: #34495e;
+    line-height: 1.6;
+}
+
+/* === Header & Navigation === */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #3498db;
+}
+
+/* === Product Section === */
+.product-details {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.product-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.product-image img {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-description {
+    flex: 1;
+    min-width: 280px;
+}
+
+.product-description h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.product-description h3 {
+    font-size: 22px;
+    color: #2980b9;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.product-description p {
+    font-size: 16px;
+    color: #7f8c8d;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* === Purchase Form === */
+.purchase-form {
+    margin-top: 40px;
+    display: grid;
+    gap: 25px;
+}
+
+.purchase-form label {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.purchase-form input,
+.purchase-form select,
+.purchase-form textarea {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.purchase-form input:focus,
+.purchase-form select:focus,
+.purchase-form textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.purchase-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* === Buttons === */
+.purchase-form .btn,
+.payment-buttons button {
+    padding: 14px 30px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.purchase-form .btn:hover,
+.payment-buttons button:hover {
+    background-color: #2980b9;
+    transform: translateY(-3px);
+}
+
+.payment-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.payment-buttons a {
+    text-decoration: none;
+}
+
+/* === Footer === */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #2980b9;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 768px) {
+    .product-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-description h2 {
+        font-size: 24px;
+    }
+
+    .product-description h3 {
+        font-size: 20px;
+    }
+
+    .purchase-form {
+        padding: 20px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,151 @@
+/* === Global Styles === */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* === Header & Navigation === */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* === Product Section === */
+.product-details {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.product-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.product-image img {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.product-description {
+    flex: 1;
+    min-width: 250px;
+}
+
+.product-description h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.product-description h3 {
+    font-size: 18px;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.product-description p {
+    font-size: 16px;
+    color: #7f8c8d;
+    line-height: 1.5;
+}
+
+/* === Purchase Form === */
+.purchase-form {
+    margin-top: 30px;
+    display: grid;
+    gap: 20px;
+}
+
+.purchase-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+.purchase-form input,
+.purchase-form select,
+.purchase-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.purchase-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* === Buttons === */
+.purchase-form .btn,
+.payment-buttons button {
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.purchase-form .btn:hover,
+.payment-buttons button:hover {
+    background-color: #2980b9;
+}
+
+.payment-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.payment-buttons a {
+    text-decoration: none;
+}
+
+/* === Footer === */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+    font-size: 14px;
+}

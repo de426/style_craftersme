@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Now - StyleCrafters</title>
+  <link rel="stylesheet" href="styledeinm.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="indexabout.html">About</a></li>
+        <li><a href="indexaddcart.html">Add to Cart</a></li>
+        <li><a href="indexcontact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-details">
+      <h1>Buy Denim Jeans</h1>
+      <div class="product-info">
+        <div class="product-image">
+          <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRtp5FGTBcDIeWewjljjHZNk-bP427CcBxzCru5K9xMvMtU4F_xCfb4nGlZ6B6lJ-em_8EyvmpM9we3d6tyoGGSAqCbalm_Bwl6ItPR-6BA8YvM&usqp=CAc" alt="Denim Jeans" />
+        </div>
+        <div class="product-description">
+          <h2>Denim Jeans</h2>
+          <h3>Brand - H&M</h3>
+          <p>This modern and sleek jeans is perfect for all seasons. Available in multiple sizes.</p>
+          <p><strong>Price:</strong> Rs. 799</p>
+        </div>
+      </div>
+
+      <form action="purchase-confirmation.html" method="POST" class="purchase-form">
+        <label for="size">Choose Size:</label>
+        <select name="size" id="size" required>
+          <option value="">Select Size</option>
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+          <option value="XL">Extra Large</option>
+        </select>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1" required />
+
+        <label for="address">Shipping Address:</label>
+        <textarea name="address" id="address" placeholder="Enter your shipping address" required></textarea>
+
+        <label>Payment Methods:</label>
+        <div class="payment-buttons">
+          <button type="button" onclick="window.location.href='index3.html'">Pay with Paytm</button>
+          <button type="button" onclick="window.location.href='index3.html'">Pay with Google Pay</button>
+          <button type="button" onclick="window.location.href='index3.html'">Pay with PhonePe</button>
+          <button type="button" onclick="window.location.href='index4.html'">Pay with Card</button>
+          <button type="button" onclick="window.location.href='index5cod.html'">Cash on Delivery</button>
+        </div>
+        
+        <br />
+        <button type="submit">Place Order</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 StyleCrafters | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+/* General */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Forgot Container */
+.forgot-container {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+}
+
+.forgot-container h2 {
+  margin-bottom: 20px;
+  color: #0077ff;
+}
+
+/* Form */
+.forgot-form .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.forgot-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.forgot-form input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Button */
+.forgot-btn {
+  width: 100%;
+  padding: 12px;
+  background: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.forgot-btn .spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid white;
+  border-top: 3px solid #0077ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.forgot-btn.loading .btn-text {
+  visibility: hidden;
+}
+
+.forgot-btn.loading .spinner {
+  display: block;
+}
+
+/* Links */
+.back-login {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.back-login a {
+  color: #0077ff;
+  text-decoration: none;
+}
+
+.back-login a:hover {
+  text-decoration: underline;
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

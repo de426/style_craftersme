@@ -1,0 +1,123 @@
+/* === Global Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Base Styling === */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #f7f9fb;
+  color: #333;
+  padding: 30px 20px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* === Section Wrapper === */
+.services-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 70px 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+}
+
+/* === Section Title === */
+.services-section h2 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: #2c3e50;
+  position: relative;
+  line-height: 1.3;
+}
+
+/* Section Title Decor */
+.services-section h2::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 60px;
+  background-color: #e76f51;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+/* === Service Grid Container === */
+.services-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* === Individual Service Card === */
+.service-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  width: 280px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Hover Effect for Service Card */
+.service-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* === Icon Styling === */
+.service-card i {
+  font-size: 50px;
+  color: #e76f51;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover i {
+  transform: rotate(10deg);
+}
+
+/* === Card Title === */
+.service-card h3 {
+  font-size: 22px;
+  color: #34495e;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+/* === Card Description === */
+.service-card p {
+  font-size: 16px;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .services-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .service-card {
+      width: 90%;
+      padding: 20px;
+  }
+
+  .services-section h2 {
+      font-size: 32px;
+  }
+}
+

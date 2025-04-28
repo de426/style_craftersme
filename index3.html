@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Payment - StyleCrafters</title>
+    <style>
+        /* Resetting default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Heading Styling */
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* QR Container */
+        .qr-container {
+            background-color: #fff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for QR container */
+        .qr-container:hover {
+            transform: translateY(-10px);
+        }
+
+        /* QR Code Styling */
+        .qr-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Payment Details Styling */
+        .payment-details {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .payment-details p {
+            margin: 10px 0;
+        }
+
+        /* Button Styling */
+        .payment-button {
+            display: inline-block;
+            background-color: #ff3b30;
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #e12f2d;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .qr-container {
+                padding: 30px;
+            }
+
+            .payment-button {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pay with UPI QR Code</h1>
+
+    <div class="qr-container">
+        <img src="/Users/macbook/Desktop/paytm QR.jpeg" alt="QR Code for Payment" />
+
+        <div class="payment-details">
+            <p><strong>Amount:</strong> ₹799.00</p>
+            <p>Please scan the QR code with your UPI app to complete the payment.</p>
+        </div>
+
+        <a href="payment_status.html" class="payment-button">I Have Paid</a>
+    </div>
+
+</body>
+
+</html>
