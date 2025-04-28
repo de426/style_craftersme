@@ -1,92 +1,64 @@
-/**
- * License for programmatically and manually incorporated
- * documentation aka. `JSDoc` from https://github.com/nodejs/node/tree/master/doc
- *
- * Copyright Node.js contributors. All rights reserved.
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
+type RemoveFromTuple<
+  Tuple extends readonly unknown[],
+  RemoveCount extends number,
+  Index extends 1[] = []
+> = Index["length"] extends RemoveCount
+  ? Tuple
+  : Tuple extends [infer First, ...infer Rest]
+  ? RemoveFromTuple<Rest, RemoveCount, [...Index, 1]>
+  : Tuple;
 
-// NOTE: These definitions support Node.js and TypeScript 5.7+.
+type ConcatTuples<
+  Prefix extends readonly unknown[],
+  Suffix extends readonly unknown[]
+> = [...Prefix, ...Suffix];
 
-// Reference required TypeScript libs:
-/// <reference lib="es2020" />
+type ExtractFunctionParams<T> = T extends (this: infer TThis, ...args: infer P extends readonly unknown[]) => infer R
+  ? { thisArg: TThis; params: P; returnType: R }
+  : never;
 
-// TypeScript backwards-compatibility definitions:
-/// <reference path="compatibility/index.d.ts" />
+type BindFunction<
+  T extends (this: any, ...args: any[]) => any,
+  TThis,
+  TBoundArgs extends readonly unknown[],
+  ReceiverBound extends boolean
+> = ExtractFunctionParams<T> extends {
+  thisArg: infer OrigThis;
+  params: infer P extends readonly unknown[];
+  returnType: infer R;
+}
+  ? ReceiverBound extends true
+    ? (...args: RemoveFromTuple<P, Extract<TBoundArgs["length"], number>>) => R extends [OrigThis, ...infer Rest]
+      ? [TThis, ...Rest] // Replace `this` with `thisArg`
+      : R
+    : <U, RemainingArgs extends RemoveFromTuple<P, Extract<TBoundArgs["length"], number>>>(
+        thisArg: U,
+        ...args: RemainingArgs
+      ) => R extends [OrigThis, ...infer Rest]
+      ? [U, ...ConcatTuples<TBoundArgs, Rest>] // Preserve bound args in return type
+      : R
+  : never;
 
-// Definitions specific to TypeScript 5.7+:
-/// <reference path="globals.typedarray.d.ts" />
-/// <reference path="buffer.buffer.d.ts" />
+declare function callBind<
+  const T extends (this: any, ...args: any[]) => any,
+  Extracted extends ExtractFunctionParams<T>,
+  const TBoundArgs extends Partial<Extracted["params"]> & readonly unknown[],
+  const TThis extends Extracted["thisArg"]
+>(
+  args: [fn: T, thisArg: TThis, ...boundArgs: TBoundArgs]
+): BindFunction<T, TThis, TBoundArgs, true>;
 
-// Definitions for Node.js modules that are not specific to any version of TypeScript:
-/// <reference path="globals.d.ts" />
-/// <reference path="assert.d.ts" />
-/// <reference path="assert/strict.d.ts" />
-/// <reference path="async_hooks.d.ts" />
-/// <reference path="buffer.d.ts" />
-/// <reference path="child_process.d.ts" />
-/// <reference path="cluster.d.ts" />
-/// <reference path="console.d.ts" />
-/// <reference path="constants.d.ts" />
-/// <reference path="crypto.d.ts" />
-/// <reference path="dgram.d.ts" />
-/// <reference path="diagnostics_channel.d.ts" />
-/// <reference path="dns.d.ts" />
-/// <reference path="dns/promises.d.ts" />
-/// <reference path="dns/promises.d.ts" />
-/// <reference path="domain.d.ts" />
-/// <reference path="dom-events.d.ts" />
-/// <reference path="events.d.ts" />
-/// <reference path="fs.d.ts" />
-/// <reference path="fs/promises.d.ts" />
-/// <reference path="http.d.ts" />
-/// <reference path="http2.d.ts" />
-/// <reference path="https.d.ts" />
-/// <reference path="inspector.d.ts" />
-/// <reference path="module.d.ts" />
-/// <reference path="net.d.ts" />
-/// <reference path="os.d.ts" />
-/// <reference path="path.d.ts" />
-/// <reference path="perf_hooks.d.ts" />
-/// <reference path="process.d.ts" />
-/// <reference path="punycode.d.ts" />
-/// <reference path="querystring.d.ts" />
-/// <reference path="readline.d.ts" />
-/// <reference path="readline/promises.d.ts" />
-/// <reference path="repl.d.ts" />
-/// <reference path="sea.d.ts" />
-/// <reference path="sqlite.d.ts" />
-/// <reference path="stream.d.ts" />
-/// <reference path="stream/promises.d.ts" />
-/// <reference path="stream/consumers.d.ts" />
-/// <reference path="stream/web.d.ts" />
-/// <reference path="string_decoder.d.ts" />
-/// <reference path="test.d.ts" />
-/// <reference path="timers.d.ts" />
-/// <reference path="timers/promises.d.ts" />
-/// <reference path="tls.d.ts" />
-/// <reference path="trace_events.d.ts" />
-/// <reference path="tty.d.ts" />
-/// <reference path="url.d.ts" />
-/// <reference path="util.d.ts" />
-/// <reference path="v8.d.ts" />
-/// <reference path="vm.d.ts" />
-/// <reference path="wasi.d.ts" />
-/// <reference path="worker_threads.d.ts" />
-/// <reference path="zlib.d.ts" />
+declare function callBind<
+  const T extends (this: any, ...args: any[]) => any,
+  Extracted extends ExtractFunctionParams<T>,
+  const TBoundArgs extends Partial<Extracted["params"]> & readonly unknown[]
+>(
+  args: [fn: T, ...boundArgs: TBoundArgs]
+): BindFunction<T, Extracted["thisArg"], TBoundArgs, false>;
+
+declare function callBind<const TArgs extends readonly unknown[]>(
+  args: [fn: Exclude<TArgs[0], Function>, ...rest: TArgs]
+): never;
+
+// export as namespace callBind;
+export = callBind;

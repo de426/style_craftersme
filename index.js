@@ -1,65 +1,170 @@
-"use strict";
-const getCodePoint = (character) => character.codePointAt(0);
-const first = (x) => x[0];
-const last = (x) => x[x.length - 1];
-function toCodePoints(input) {
-    const codepoints = [];
-    const size = input.length;
-    for (let i = 0; i < size; i += 1) {
-        const before = input.charCodeAt(i);
-        if (before >= 0xd800 && before <= 0xdbff && size > i + 1) {
-            const next = input.charCodeAt(i + 1);
-            if (next >= 0xdc00 && next <= 0xdfff) {
-                codepoints.push((before - 0xd800) * 0x400 + next - 0xdc00 + 0x10000);
-                i += 1;
-                continue;
-            }
-        }
-        codepoints.push(before);
-    }
-    return codepoints;
+/*!
+ * bytes
+ * Copyright(c) 2012-2014 TJ Holowaychuk
+ * Copyright(c) 2015 Jed Watson
+ * MIT Licensed
+ */
+
+'use strict';
+
+/**
+ * Module exports.
+ * @public
+ */
+
+module.exports = bytes;
+module.exports.format = format;
+module.exports.parse = parse;
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var formatThousandsRegExp = /\B(?=(\d{3})+(?!\d))/g;
+
+var formatDecimalsRegExp = /(?:\.0*|(\.[^0]+)0+)$/;
+
+var map = {
+  b:  1,
+  kb: 1 << 10,
+  mb: 1 << 20,
+  gb: 1 << 30,
+  tb: Math.pow(1024, 4),
+  pb: Math.pow(1024, 5),
+};
+
+var parseRegExp = /^((-|\+)?(\d+(?:\.\d+)?)) *(kb|mb|gb|tb|pb)$/i;
+
+/**
+ * Convert the given value in bytes into a string or parse to string to an integer in bytes.
+ *
+ * @param {string|number} value
+ * @param {{
+ *  case: [string],
+ *  decimalPlaces: [number]
+ *  fixedDecimals: [boolean]
+ *  thousandsSeparator: [string]
+ *  unitSeparator: [string]
+ *  }} [options] bytes options.
+ *
+ * @returns {string|number|null}
+ */
+
+function bytes(value, options) {
+  if (typeof value === 'string') {
+    return parse(value);
+  }
+
+  if (typeof value === 'number') {
+    return format(value, options);
+  }
+
+  return null;
 }
-function saslprep({ unassigned_code_points, commonly_mapped_to_nothing, non_ASCII_space_characters, prohibited_characters, bidirectional_r_al, bidirectional_l, }, input, opts = {}) {
-    const mapping2space = non_ASCII_space_characters;
-    const mapping2nothing = commonly_mapped_to_nothing;
-    if (typeof input !== 'string') {
-        throw new TypeError('Expected string.');
+
+/**
+ * Format the given value in bytes into a string.
+ *
+ * If the value is negative, it is kept as such. If it is a float,
+ * it is rounded.
+ *
+ * @param {number} value
+ * @param {object} [options]
+ * @param {number} [options.decimalPlaces=2]
+ * @param {number} [options.fixedDecimals=false]
+ * @param {string} [options.thousandsSeparator=]
+ * @param {string} [options.unit=]
+ * @param {string} [options.unitSeparator=]
+ *
+ * @returns {string|null}
+ * @public
+ */
+
+function format(value, options) {
+  if (!Number.isFinite(value)) {
+    return null;
+  }
+
+  var mag = Math.abs(value);
+  var thousandsSeparator = (options && options.thousandsSeparator) || '';
+  var unitSeparator = (options && options.unitSeparator) || '';
+  var decimalPlaces = (options && options.decimalPlaces !== undefined) ? options.decimalPlaces : 2;
+  var fixedDecimals = Boolean(options && options.fixedDecimals);
+  var unit = (options && options.unit) || '';
+
+  if (!unit || !map[unit.toLowerCase()]) {
+    if (mag >= map.pb) {
+      unit = 'PB';
+    } else if (mag >= map.tb) {
+      unit = 'TB';
+    } else if (mag >= map.gb) {
+      unit = 'GB';
+    } else if (mag >= map.mb) {
+      unit = 'MB';
+    } else if (mag >= map.kb) {
+      unit = 'KB';
+    } else {
+      unit = 'B';
     }
-    if (input.length === 0) {
-        return '';
-    }
-    const mapped_input = toCodePoints(input)
-        .map((character) => (mapping2space.get(character) ? 0x20 : character))
-        .filter((character) => !mapping2nothing.get(character));
-    const normalized_input = String.fromCodePoint
-        .apply(null, mapped_input)
-        .normalize('NFKC');
-    const normalized_map = toCodePoints(normalized_input);
-    const hasProhibited = normalized_map.some((character) => prohibited_characters.get(character));
-    if (hasProhibited) {
-        throw new Error('Prohibited character, see https://tools.ietf.org/html/rfc4013#section-2.3');
-    }
-    if (opts.allowUnassigned !== true) {
-        const hasUnassigned = normalized_map.some((character) => unassigned_code_points.get(character));
-        if (hasUnassigned) {
-            throw new Error('Unassigned code point, see https://tools.ietf.org/html/rfc4013#section-2.5');
-        }
-    }
-    const hasBidiRAL = normalized_map.some((character) => bidirectional_r_al.get(character));
-    const hasBidiL = normalized_map.some((character) => bidirectional_l.get(character));
-    if (hasBidiRAL && hasBidiL) {
-        throw new Error('String must not contain RandALCat and LCat at the same time,' +
-            ' see https://tools.ietf.org/html/rfc3454#section-6');
-    }
-    const isFirstBidiRAL = bidirectional_r_al.get(getCodePoint(first(normalized_input)));
-    const isLastBidiRAL = bidirectional_r_al.get(getCodePoint(last(normalized_input)));
-    if (hasBidiRAL && !(isFirstBidiRAL && isLastBidiRAL)) {
-        throw new Error('Bidirectional RandALCat character must be the first and the last' +
-            ' character of the string, see https://tools.ietf.org/html/rfc3454#section-6');
-    }
-    return normalized_input;
+  }
+
+  var val = value / map[unit.toLowerCase()];
+  var str = val.toFixed(decimalPlaces);
+
+  if (!fixedDecimals) {
+    str = str.replace(formatDecimalsRegExp, '$1');
+  }
+
+  if (thousandsSeparator) {
+    str = str.split('.').map(function (s, i) {
+      return i === 0
+        ? s.replace(formatThousandsRegExp, thousandsSeparator)
+        : s
+    }).join('.');
+  }
+
+  return str + unitSeparator + unit;
 }
-saslprep.saslprep = saslprep;
-saslprep.default = saslprep;
-module.exports = saslprep;
-//# sourceMappingURL=index.js.map
+
+/**
+ * Parse the string value into an integer in bytes.
+ *
+ * If no unit is given, it is assumed the value is in bytes.
+ *
+ * @param {number|string} val
+ *
+ * @returns {number|null}
+ * @public
+ */
+
+function parse(val) {
+  if (typeof val === 'number' && !isNaN(val)) {
+    return val;
+  }
+
+  if (typeof val !== 'string') {
+    return null;
+  }
+
+  // Test if the string passed is valid
+  var results = parseRegExp.exec(val);
+  var floatValue;
+  var unit = 'b';
+
+  if (!results) {
+    // Nothing could be extracted from the given string
+    floatValue = parseInt(val, 10);
+    unit = 'b'
+  } else {
+    // Retrieve the value and the unit
+    floatValue = parseFloat(results[1]);
+    unit = results[4].toLowerCase();
+  }
+
+  if (isNaN(floatValue)) {
+    return null;
+  }
+
+  return Math.floor(map[unit] * floatValue);
+}
